@@ -19,7 +19,7 @@
             <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                 {% for prediction in predictions %}
                 <div class="bg-blue-100 p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-semibold">{{ prediction.date.strftime('%A, %B %d, %Y') }}</h3>
+                    <h3 class="text-xl font-semibold">{{ prediction.date.strftime('%A, %d-%m-%Y') }}</h3>
                     <p class="mt-2 text-lg">{{ prediction.prediction }}</p>
                 </div>
                 {% endfor %}
