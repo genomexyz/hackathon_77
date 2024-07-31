@@ -4,7 +4,8 @@ import pickle
 
 #setting
 file_dset = 'Data Fklim BMKG 2023.csv'
-len_historic = 5
+len_historic = 2
+num_param = 5
 len_predict = 3
 wmo2kota = {}
 wmo2kota[96017] = 'Kota Banda Aceh'
@@ -33,7 +34,6 @@ map_emit['obs_list'] = ['temperature_avg', 'rh_avg', 'wspd_avg', 'sunshine_24h']
 map_emit['emit_label'] = {}
 #map_emit['emit_label']['yes'] = {}
 #map_emit['emit_label']['no'] = {}
-
 
 all_keys = list(dict.keys(wmo2kota))
 for iter_keys in range(len(all_keys)):
@@ -111,14 +111,14 @@ for iter_keys in range(len(all_keys)):
     map_emit['obs_median'] = [median_temp, median_rh, median_wspd, median_sun]
 
     #order temp, rh, wspd, sun
-    mat_freq_emit_yes = np.zeros((len_historic*5,2))
-    mat_freq_emit_no = np.zeros((len_historic*5,2))
+    mat_freq_emit_yes = np.zeros((len_historic*num_param,2))
+    mat_freq_emit_no = np.zeros((len_historic*num_param,2))
 
-    mat_freq_emit_yes2 = np.zeros((len_historic*5,2))
-    mat_freq_emit_no2 = np.zeros((len_historic*5,2))
+    mat_freq_emit_yes2 = np.zeros((len_historic*num_param,2))
+    mat_freq_emit_no2 = np.zeros((len_historic*num_param,2))
 
-    mat_freq_emit_yes3 = np.zeros((len_historic*5,2))
-    mat_freq_emit_no3 = np.zeros((len_historic*5,2))
+    mat_freq_emit_yes3 = np.zeros((len_historic*num_param,2))
+    mat_freq_emit_no3 = np.zeros((len_historic*num_param,2))
 
     single_arr_ori = np.array(single_wmo_data[['TEMPERATURE AVG C', 'REL HUMIDITY AVG PC', 'WIND SPEED 24H MAX MS', 'SUNSHINE 24H H']])
     for iter_v in range(len(vector_rain)-len_historic-3):
@@ -321,6 +321,7 @@ for iter_keys in range(len(all_keys)):
     mat_emit_yes3 = mat_freq_emit_yes3.T / np.sum(mat_freq_emit_yes3, axis=1)
     mat_emit_yes3 = mat_emit_yes3.T
 
+    print('cek component', mat_freq_emit_no3.T, np.shape(mat_freq_emit_no3.T))
     mat_emit_no3 = mat_freq_emit_no3.T / np.sum(mat_freq_emit_no3, axis=1)
     mat_emit_no3 = mat_emit_no3.T
 
