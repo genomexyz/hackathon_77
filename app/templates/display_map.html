@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map with Time Slider</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        #slider-container {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #time-slider {
+            -webkit-appearance: none;
+            width: 200px;
+            height: 10px;
+            background: #ddd;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+            border-radius: 5px;
+            margin: 0 10px;
+        }
+        #time-slider:hover {
+            opacity: 1;
+        }
+        #time-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #4CAF50;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        #time-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #4CAF50;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        #time-label {
+            font-size: 16px;
+            margin-right: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+<div id="slider-container">
+    <label for="time-slider" id="time-label"></label>
+    <input type="range" id="time-slider" min="0" max="4" value="0">
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    // Initialize the map
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    // Add a base layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Prepare overlay raster layers with datetime metadata
+    var overlayLayers = [
+        {
+            datetime: '2023-01-01',
+            layer: L.imageOverlay('https://example.com/raster1.png', [[51.49, -0.08], [51.5, -0.06]])
+        },
+        {
+            datetime: '2023-02-01',
+            layer: L.imageOverlay('https://example.com/raster2.png', [[51.49, -0.08], [51.5, -0.06]])
+        },
+        {
+            datetime: '2023-03-01',
+            layer: L.imageOverlay('https://example.com/raster3.png', [[51.49, -0.08], [51.5, -0.06]])
+        },
+        {
+            datetime: '2023-04-01',
+            layer: L.imageOverlay('https://example.com/raster4.png', [[51.49, -0.08], [51.5, -0.06]])
+        },
+        {
+            datetime: '2023-05-01',
+            layer: L.imageOverlay('https://example.com/raster5.png', [[51.49, -0.08], [51.5, -0.06]])
+        }
+    ];
+
+    // Add the first overlay layer to the map
+    overlayLayers[0].layer.addTo(map);
+    document.getElementById('time-label').textContent = overlayLayers[0].datetime;
+
+    // Function to update the overlay layer based on slider value
+    function updateOverlayLayer(index) {
+        overlayLayers.forEach(function(item, i) {
+            map.removeLayer(item.layer);
+        });
+        overlayLayers[index].layer.addTo(map);
+        document.getElementById('time-label').textContent = overlayLayers[index].datetime;
+    }
+
+    // Slider input event listener
+    document.getElementById('time-slider').addEventListener('input', function() {
+        var index = this.value;
+        updateOverlayLayer(index);
+    });
+</script>
+
+</body>
+</html>
