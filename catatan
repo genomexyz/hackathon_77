@@ -1,0 +1,107 @@
+filter_by_keys={'typeOfLevel': 'meanSea'}
+    filter_by_keys={'typeOfLevel': 'hybrid'}
+    filter_by_keys={'typeOfLevel': 'atmosphere'}
+    filter_by_keys={'typeOfLevel': 'surface'}
+    filter_by_keys={'typeOfLevel': 'planetaryBoundaryLayer'}
+    filter_by_keys={'typeOfLevel': 'isobaricInPa'}
+    filter_by_keys={'typeOfLevel': 'isobaricInhPa'}
+    filter_by_keys={'typeOfLevel': 'heightAboveGround'}
+    filter_by_keys={'typeOfLevel': 'depthBelowLandLayer'}
+    filter_by_keys={'typeOfLevel': 'heightAboveSea'}
+    filter_by_keys={'typeOfLevel': 'atmosphereSingleLayer'}
+    filter_by_keys={'typeOfLevel': 'lowCloudLayer'}
+    filter_by_keys={'typeOfLevel': 'middleCloudLayer'}
+    filter_by_keys={'typeOfLevel': 'highCloudLayer'}
+    filter_by_keys={'typeOfLevel': 'cloudCeiling'}
+    filter_by_keys={'typeOfLevel': 'convectiveCloudBottom'}
+    filter_by_keys={'typeOfLevel': 'lowCloudBottom'}
+    filter_by_keys={'typeOfLevel': 'middleCloudBottom'}
+    filter_by_keys={'typeOfLevel': 'highCloudBottom'}
+    filter_by_keys={'typeOfLevel': 'convectiveCloudTop'}
+    filter_by_keys={'typeOfLevel': 'lowCloudTop'}
+    filter_by_keys={'typeOfLevel': 'middleCloudTop'}
+    filter_by_keys={'typeOfLevel': 'highCloudTop'}
+    filter_by_keys={'typeOfLevel': 'convectiveCloudLayer'}
+    filter_by_keys={'typeOfLevel': 'boundaryLayerCloudLayer'}
+    filter_by_keys={'typeOfLevel': 'nominalTop'}
+    filter_by_keys={'typeOfLevel': 'heightAboveGroundLayer'}
+    filter_by_keys={'typeOfLevel': 'tropopause'}
+    filter_by_keys={'typeOfLevel': 'maxWind'}
+    filter_by_keys={'typeOfLevel': 'isothermZero'}
+    filter_by_keys={'typeOfLevel': 'highestTroposphericFreezing'}
+    filter_by_keys={'typeOfLevel': 'pressureFromGroundLayer'}
+    filter_by_keys={'typeOfLevel': 'sigmaLayer'}
+    filter_by_keys={'typeOfLevel': 'sigma'}
+    filter_by_keys={'typeOfLevel': 'potentialVorticity'}
+
+stat 0.0 0.2734537 64.6875 gfs.t00z.pgrb2.0p25.f002
+stat 0.0 0.27341607 47.5 gfs.t00z.pgrb2.0p25.f003
+stat 0.0 0.27166697 53.6875 gfs.t00z.pgrb2.0p25.f004
+stat 0.0 0.27256334 53.5 gfs.t00z.pgrb2.0p25.f005
+stat 0.0 0.2725896 63.4375 gfs.t00z.pgrb2.0p25.f006
+stat -256.125 -1.3627568 11.8125 gfs.t00z.pgrb2.0p25.f007
+stat 0.0 0.26891524 34.4375 gfs.t00z.pgrb2.0p25.f008
+stat 0.0 0.26992804 36.875 gfs.t00z.pgrb2.0p25.f009
+stat 0.0 0.26665914 40.5625 gfs.t00z.pgrb2.0p25.f010
+stat 0.0 0.2641152 34.875 gfs.t00z.pgrb2.0p25.f011
+stat 0.0 0.26295254 30.25 gfs.t00z.pgrb2.0p25.f012
+stat -151.6875 -1.3423016 17.0 gfs.t00z.pgrb2.0p25.f013
+stat 0.0 0.258641 66.0625 gfs.t00z.pgrb2.0p25.f014
+stat 0.0 0.25728065 48.9375 gfs.t00z.pgrb2.0p25.f015
+stat 0.0 0.25970393 38.75 gfs.t00z.pgrb2.0p25.f016
+stat 0.0 0.26277637 54.375 gfs.t00z.pgrb2.0p25.f017
+stat 0.0 0.2667296 74.375 gfs.t00z.pgrb2.0p25.f018
+stat -168.9375 -1.2945564 12.4375 gfs.t00z.pgrb2.0p25.f019
+stat 0.0 0.27111638 63.3125 gfs.t00z.pgrb2.0p25.f020
+stat 0.0 0.27083156 56.3125 gfs.t00z.pgrb2.0p25.f021
+stat 0.0 0.26870087 52.4375 gfs.t00z.pgrb2.0p25.f022
+stat 0.0 0.26253033 36.125 gfs.t00z.pgrb2.0p25.f023
+stat 0.0 0.25354955 36.3125 gfs.t00z.pgrb2.0p25.f024
+stat -179.875 -1.3489587 19.25 gfs.t00z.pgrb2.0p25.f025
+stat 0.0 0.24477002 48.3125 gfs.t00z.pgrb2.0p25.f026
+stat 0.0 0.24263276 43.0 gfs.t00z.pgrb2.0p25.f027
+stat 0.0 0.24476704 46.5 gfs.t00z.pgrb2.0p25.f028
+stat 0.0 0.24781975 47.9375 gfs.t00z.pgrb2.0p25.f029
+stat 0.0 0.2507393 53.3125 gfs.t00z.pgrb2.0p25.f030
+stat -137.875 -1.2252265 17.125 gfs.t00z.pgrb2.0p25.f031
+stat 0.0 0.25891748 38.0625 gfs.t00z.pgrb2.0p25.f032
+stat 0.0 0.26004374 41.4375 gfs.t00z.pgrb2.0p25.f033
+stat 0.0 0.25824746 50.5625 gfs.t00z.pgrb2.0p25.f034
+stat 0.0 0.25258034 62.8125 gfs.t00z.pgrb2.0p25.f035
+stat 0.0 0.2480825 39.25 gfs.t00z.pgrb2.0p25.f036
+stat -137.625 -1.2838784 54.5625 gfs.t00z.pgrb2.0p25.f037
+stat 0.0 0.25004897 53.3125 gfs.t00z.pgrb2.0p25.f038
+stat 0.0 0.25206918 55.0 gfs.t00z.pgrb2.0p25.f039
+stat 0.0 0.25832868 39.3125 gfs.t00z.pgrb2.0p25.f040
+stat 0.0 0.2631699 28.625 gfs.t00z.pgrb2.0p25.f041
+stat 0.0 0.2664794 29.9375 gfs.t00z.pgrb2.0p25.f042
+stat -192.9375 -1.2674497 16.875 gfs.t00z.pgrb2.0p25.f043
+stat 0.0 0.27219486 53.875 gfs.t00z.pgrb2.0p25.f044
+stat 0.0 0.27105668 51.375 gfs.t00z.pgrb2.0p25.f045
+stat 0.0 0.26819387 36.125 gfs.t00z.pgrb2.0p25.f046
+stat 0.0 0.2647327 36.625 gfs.t00z.pgrb2.0p25.f047
+stat 0.0 0.26221862 66.9375 gfs.t00z.pgrb2.0p25.f048
+stat -143.25 -1.3478929 19.5625 gfs.t00z.pgrb2.0p25.f049
+stat 0.0 0.26301524 57.125 gfs.t00z.pgrb2.0p25.f050
+stat 0.0 0.26274234 59.5 gfs.t00z.pgrb2.0p25.f051
+stat 0.0 0.2675955 68.25 gfs.t00z.pgrb2.0p25.f052
+stat 0.0 0.27134034 56.375 gfs.t00z.pgrb2.0p25.f053
+stat 0.0 0.27224204 44.875 gfs.t00z.pgrb2.0p25.f054
+stat -209.9375 -1.3248076 20.5 gfs.t00z.pgrb2.0p25.f055
+stat 0.0 0.27529475 27.5625 gfs.t00z.pgrb2.0p25.f056
+stat 0.0 0.2735367 34.1875 gfs.t00z.pgrb2.0p25.f057
+stat 0.0 0.27037174 33.9375 gfs.t00z.pgrb2.0p25.f058
+stat 0.0 0.26610616 29.25 gfs.t00z.pgrb2.0p25.f059
+stat 0.0 0.25673306 36.0 gfs.t00z.pgrb2.0p25.f060
+stat -88.5 -1.3587224 19.4375 gfs.t00z.pgrb2.0p25.f061
+stat 0.0 0.25918204 46.5 gfs.t00z.pgrb2.0p25.f062
+stat 0.0 0.26320454 37.9375 gfs.t00z.pgrb2.0p25.f063
+stat 0.0 0.26954824 26.5 gfs.t00z.pgrb2.0p25.f064
+stat 0.0 0.2777073 32.0625 gfs.t00z.pgrb2.0p25.f065
+stat 0.0 0.28269723 34.125 gfs.t00z.pgrb2.0p25.f066
+stat -102.75 -1.3234138 19.125 gfs.t00z.pgrb2.0p25.f067
+stat 0.0 0.28648984 51.6875 gfs.t00z.pgrb2.0p25.f068
+stat 0.0 0.28381273 56.6875 gfs.t00z.pgrb2.0p25.f069
+stat 0.0 0.28109086 38.9375 gfs.t00z.pgrb2.0p25.f070
+stat 0.0 0.27944326 57.0625 gfs.t00z.pgrb2.0p25.f071
+stat 0.0 0.27683964 40.5 gfs.t00z.pgrb2.0p25.f072
