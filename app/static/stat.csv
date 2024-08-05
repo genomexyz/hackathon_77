@@ -1,33 +1,33 @@
-nama,lat,lon,status1,status2,status3
-Kota Banda Aceh,5.55870440391002,95.3277134583266,hujan,hujan,tidak
-Kota Denpasar,-8.66835608168269,115.2208162921,hujan,hujan,tidak
-Kota Serang,-6.12332358763203,106.166750570902,tidak,hujan,tidak
-Kota Bengkulu,-3.84139690446116,102.308157669406,tidak,hujan,tidak
-Kota Yogyakarta,-7.80329751928415,110.374357934988,tidak,hujan,tidak
-Kota Adm. Jakarta Pusat,-6.18125694125157,106.834784774168,tidak,tidak,tidak
-Gorontalo,0.692899344662217,122.712517841215,tidak,tidak,tidak
-Kota Jambi,-1.61817742211564,103.599789139004,tidak,tidak,tidak
-Kota Bandung,-6.91924138115648,107.636600627049,tidak,tidak,tidak
-Kota Semarang,-7.02389860537421,110.391522631628,tidak,tidak,tidak
-Kota Surabaya,-7.27432281901427,112.723584124473,tidak,tidak,tidak
-Kota Pontianak,-0.025780638444224,109.331697469047,tidak,tidak,tidak
-Kota Banjarmasin,-3.32912147950181,114.591798684968,tidak,tidak,tidak
-Kota Palangkaraya,-2.0074642795733,113.767474262674,tidak,tidak,tidak
-Kota Samarinda,-0.500279726383097,117.177063454092,tidak,tidak,tidak
-Kota Tarakan,3.35940546608596,117.599511456185,tidak,tidak,tidak
-Kota Pangkal Pinang,-2.11051314883955,106.113210199045,tidak,tidak,tidak
-Kota Tanjung Pinang,0.919578460541912,104.487065494625,tidak,tidak,tidak
-Kota Bandar Lampung,-5.41419718001887,105.262131927314,tidak,tidak,tidak
-Kota Ambon,-3.68535713258351,128.194975582947,tidak,tidak,tidak
-Kota Ternate,0.838480554811686,127.172526859473,tidak,tidak,tidak
-Kota Mataram,-8.59015438222982,116.110958590484,tidak,tidak,tidak
-Kota Kupang,-10.204506383998,123.60454402768,tidak,tidak,tidak
-Kota Jayapura,-2.66452600790919,140.800136365246,tidak,tidak,tidak
-Kota Pekanbaru,0.551276552593408,101.4657262946,tidak,tidak,tidak
-Mamuju,-2.51969779073573,119.344575969858,tidak,tidak,tidak
-Kota Makassar,-5.13561023881023,119.46389981932,tidak,tidak,tidak
-Kota Kendari,-3.99757984247291,122.532614890591,tidak,tidak,tidak
-Kota Manado,1.52492088852475,124.847900095379,tidak,tidak,tidak
-Kota Padang,-0.89887185002082,100.437643670514,tidak,tidak,tidak
-Kota Palembang,-2.97171944977744,104.741319725169,tidak,tidak,tidak
-Kota Medan,3.62894711039971,98.6673644708913,tidak,tidak,tidak
+nama,lat,lon,status1,status2,status3,dt1,dt2,dt3
+Kota Banda Aceh,5.5587044039100215,95.32771345832658,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Denpasar,-8.668356081682692,115.22081629210008,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Serang,-6.123323587632026,106.1667505709024,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Bengkulu,-3.8413969044611647,102.30815766940589,hujan,hujan,hujan,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Yogyakarta,-7.803297519284145,110.37435793498788,tidak,hujan,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Adm. Jakarta Pusat,-6.18125694125157,106.834784774168,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Gorontalo,0.6928993446622174,122.71251784121482,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Jambi,-1.618177422115637,103.59978913900372,hujan,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Bandung,-6.9192413811564775,107.63660062704936,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Semarang,-7.023898605374207,110.39152263162826,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Surabaya,-7.274322819014268,112.72358412447288,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Pontianak,-0.0257806384442238,109.33169746904684,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Banjarmasin,-3.329121479501814,114.59179868496751,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Palangkaraya,-2.0074642795733038,113.76747426267384,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Samarinda,-0.5002797263830973,117.1770634540918,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Tarakan,3.359405466085963,117.59951145618544,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Pangkal Pinang,-2.1105131488395457,106.11321019904472,hujan,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Tanjung Pinang,0.9195784605419122,104.48706549462518,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Bandar Lampung,-5.414197180018868,105.26213192731406,hujan,hujan,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Ambon,-3.68535713258351,128.19497558294722,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Ternate,0.8384805548116864,127.17252685947264,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Mataram,-8.590154382229818,116.11095859048376,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Kupang,-10.204506383997964,123.60454402768045,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Jayapura,-2.6645260079091857,140.80013636524563,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Pekanbaru,0.5512765525934084,101.46572629460007,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Mamuju,-2.519697790735727,119.344575969858,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Makassar,-5.135610238810225,119.46389981932012,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Kendari,-3.9975798424729057,122.53261489059084,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Manado,1.5249208885247505,124.84790009537883,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Padang,-0.8988718500208198,100.437643670514,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Palembang,-2.971719449777443,104.7413197251688,hujan,hujan,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
+Kota Medan,3.6289471103997095,98.66736447089129,tidak,tidak,tidak,Monday 29-07-2024,Tuesday 30-07-2024,Wednesday 31-07-2024
