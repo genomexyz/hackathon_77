@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 from datetime import datetime, timedelta, date
 import xml.etree.ElementTree as ET
 import requests
@@ -228,6 +228,11 @@ def index():
 def display():
     #predictions = get_rain_predictions()
     return render_template('display_map.html')
+
+@app.route('/overlay/<path:filename>')
+def serve_image(filename):
+    image_directory = 'overlay'
+    return send_from_directory(image_directory, filename)
 
 if __name__ == '__main__':
     app.run(debug=True)
