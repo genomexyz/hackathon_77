@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaflet Map with Time Slider</title>
+    <title>Display Hujan 3 Hari kedepan</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         html, body {
@@ -67,10 +67,25 @@
             font-weight: bold;
             color: #333;
         }
+        #map-title {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #fff; /* White text color */
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            padding: 10px 20px; /* Padding for better spacing */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+            z-index: 1000; /* Ensure the title is on top of the map */
+        }
     </style>
 </head>
 <body>
 
+<div id="map-title">3-Day Rain Prediction</div>
 <div id="map"></div>
 <div id="slider-container">
     <label for="time-slider" id="time-label"></label>
@@ -85,6 +100,9 @@
     table_lat = []
     table_lon = []
     table_stat = []
+
+    hujan_marker = []
+    tidak_marker = []
     function load_data() {
     	var nama = []
     	var xhttp = new XMLHttpRequest();
@@ -116,11 +134,61 @@
     }
 
     load_data()
+
+    var tidak_hujan_grup = L.layerGroup();
+    var icon_tidak_hujan = L.icon({
+        iconUrl: "{{ url_for('static', filename='icon_tidak.png') }}",
+
+        iconSize:	 [15, 15], // size of the icon
+        iconAnchor:   [8, 8], // point of the icon which will correspond to marker's location
+        popupAnchor:  [6, 0] // point from which the popup should open relative to the iconAnchor
+    })
+
+    var hujan_grup = L.layerGroup();
+    var icon_hujan = L.icon({
+        iconUrl: "{{ url_for('static', filename='icon_hujan.png') }}",
+
+        iconSize:	 [15, 15], // size of the icon
+        iconAnchor:   [8, 8], // point of the icon which will correspond to marker's location
+        popupAnchor:  [6, 0] // point from which the popup should open relative to the iconAnchor
+    })
+
+    function place_icon(idx) {
+        hujan_grup.clearLayers()
+        tidak_hujan_grup.clearLayers()
+        hujan_marker = []
+        tidak_marker = []
+        for (let iter_m = 0; iter_m < table_nama.length; iter_m++) {
+            let single_nama = table_nama[iter_m]
+            let single_stat = table_stat[iter_m]
+            let single_stat_choose = single_stat[idx]
+
+            if (single_stat_choose == "hujan") {
+                hujan_marker.push(L.marker([table_lat[iter_m], table_lon[iter_m]], {icon: icon_hujan}));
+				hujan_marker[(hujan_marker.length)-1].addTo(hujan_grup)
+                hujan_marker[(hujan_marker.length)-1].bindPopup("<b style='color:blue;'>"+single_nama+"</b>")
+            } else {
+                tidak_marker.push(L.marker([table_lat[iter_m], table_lon[iter_m]], {icon: icon_tidak_hujan}));
+				tidak_marker[(tidak_marker.length)-1].addTo(tidak_hujan_grup)
+                tidak_marker[(tidak_marker.length)-1].bindPopup("<b>"+single_nama+"</b>")
+            }
+        }
+        hujan_grup.addTo(map)
+        tidak_hujan_grup.addTo(map)
+    }
+
+    place_icon(0)
+
 </script>
 
 <script>
     // Initialize the map
-    var map = L.map('map').setView([-2.5, 118.0], 6);
+    //var map = L.map('map').setView([-2.5, 118.0], 6);
+    var map = L.map('map', {
+		center: [-2.5, 118.0],
+		zoom: 5,
+		layers: [hujan_grup, tidak_hujan_grup]
+    });
     const latLngBounds = L.latLngBounds([[-25, 70], [40, 170]]);
 
     // Add a base layer
@@ -155,6 +223,7 @@
         });
         overlayLayers[index].layer.addTo(map);
         document.getElementById('time-label').textContent = overlayLayers[index].datetime;
+        place_icon(index)
 
         //update marker
     }
