@@ -6,6 +6,7 @@ import gzip
 from scipy.interpolate import griddata
 import pickle
 from imread import imread, imsave
+import pandas as pd
 
 #setting
 basetime_dir = 'data_model/gfs'
@@ -17,6 +18,8 @@ lat_high = 40.0
 lon_low = 70.0
 lon_high = 170.0
 threshold_hujan = 0.5
+len_memory_brain = 14
+radius = 1
 
 def search_index(mat, coordinate_target):
     for i in range(len(mat)):
@@ -43,6 +46,12 @@ def determine_quadrant(value, percentiles):
         if value < p:
             return i
     return len(percentiles)
+
+def modify_weight(weight, update_value):
+    new_weight = np.zeros_like(weight)
+    new_weight[:-1, :] = weight[1:, :]
+    new_weight[-1, :] = update_value
+    return new_weight
 
 lon_mat_target = np.linspace(0.05,359.95,3600)
 lat_mat_target = np.linspace(59.95,-59.95,1200)
@@ -71,6 +80,11 @@ print(used_basetime)
 
 with open('brain_full.pkl', 'rb') as fp:
     map_emit = pickle.load(fp)
+
+try:
+    weights = np.load('weight.npy')
+except FileNotFoundError:
+    weights = np.zeros((len_memory_brain, 2))
 
 arr_hujans = []
 arr_cloud_clover = []
@@ -354,13 +368,177 @@ for iter_step in range(len_day_predict):
     single_2d = np.reshape(single_2d_1d, (len(lat), len(lon)))
     predict_2d[iter_step, :, :] = single_2d
     previous_rain = single_2d.ravel()
+
+#predict with only GFS
+predict_2d_gfs = np.zeros((len_day_predict, len(lon2d), len(lon2d[0])))
+for iter_model in range(len(hujan_daily)):
+    single_2d = np.zeros((len(lat), len(lon)))
+    single_2d[hujan_daily[iter_model] > threshold_hujan] = 1
+    predict_2d_gfs[iter_model, :, :] = single_2d
+
+
+#ground truth
+gt_files = ['gsmap_gauge.20240729.0.1d.daily.00Z-23Z.dat.gz', 'gsmap_gauge.20240730.0.1d.daily.00Z-23Z.dat.gz', 'gsmap_gauge.20240731.0.1d.daily.00Z-23Z.dat.gz']
+gt_gsmap = np.zeros((len_day_predict, len(lon2d), len(lon2d[0])))
+for iter_gt in range(len(gt_files)):
+    single_gt = data_gsmap+'/'+gt_files[iter_gt]
+    
+    gz = gzip.GzipFile(single_gt, 'rb')
+    gsmap_data = np.frombuffer(gz.read(),dtype=np.float32)
+    gsmap_data = gsmap_data.reshape((1200,3600))
+    gsmap_data = gsmap_data[::-1]
+    gsmap_data = gsmap_data[lat_low_idx: lat_high_idx+1, lon_low_idx: lon_high_idx+1]
+    gsmap_data = np.copy(gsmap_data)
+    gsmap_data[gsmap_data == -99] = np.nan
+
+    X_used = X[lat_low_idx: lat_high_idx+1, lon_low_idx: lon_high_idx+1]
+    Y_used = Y[lat_low_idx: lat_high_idx+1, lon_low_idx: lon_high_idx+1]
+
+    gsmap_data_regrid_gt = regrid_data(gsmap_data, X_used, Y_used, lon2d, lat2d)
+    single_2d = np.zeros((len(lat), len(lon)))
+    single_2d[gsmap_data_regrid_gt > threshold_hujan] = 1
+    gt_gsmap[iter_model, :, :] = single_2d
+
     #print('cek bin', np.sum(single_2d))
     #break
+
+#choose model
+mat_model = np.array([predict_2d, predict_2d_gfs])
+if np.sum(weights) == 0:
+    model_choice_idx = np.random.choice([0, 1])
+    choosen_prediction = mat_model[model_choice_idx]
+else:
+    weight_v = np.sum(weights, axis=0)
+    model_choice_idx = np.argmax(weight_v)
+    choosen_prediction = mat_model[model_choice_idx]
+
+#choosen_prediction = mat_model[1]
+
+#create stat.csv
+df = pd.read_csv('lokasi.csv')
+nama_area = list(df['nama'])
+lat_area = np.array(df['lat'])
+lon_area = np.array(df['lon'])
+
+status1 = []
+status2 = []
+status3 = []
+max_lat_idx = len(lat) - 1
+for iter_nama in range(len(nama_area)):
+    single_area = nama_area[iter_nama]
+    single_lat = lat_area[iter_nama]
+    single_lon = lon_area[iter_nama]
+
+    idx_lon = search_index(lon, single_lon)
+    idx_lat = search_index(lat, single_lat)
+    idx_lat = max_lat_idx - idx_lat
+
+    single_status = np.zeros(len_day_predict)
+    prec1 = choosen_prediction[0, idx_lat-radius:idx_lat+radius, idx_lon-radius:idx_lon+radius]
+    prec2 = choosen_prediction[1, idx_lat-radius:idx_lat+radius, idx_lon-radius:idx_lon+radius]
+    prec3 = choosen_prediction[2, idx_lat-radius:idx_lat+radius, idx_lon-radius:idx_lon+radius]
+
+    prec1 = np.sum(prec1)
+    prec2 = np.sum(prec2)
+    prec3 = np.sum(prec3)
+    
+    if prec1 > 0:
+        status1.append('hujan')
+    else:
+        status1.append('tidak')
+    
+    if prec2 > 0:
+        status2.append('hujan')
+    else:
+        status2.append('tidak')
+    
+    if prec3 > 0:
+        status3.append('hujan')
+    else:
+        status3.append('tidak')
+    
+    print('cek prec', prec1, prec2, prec3, single_lat, single_lon, idx_lat, idx_lon)
+
+print('cek lat lon', lat[0], lat[-1], lon[0], lon[-1])
+
+df_dict_new = {}
+df_dict_new['nama'] = nama_area
+df_dict_new['lat'] = lat_area
+df_dict_new['lon'] = lon_area
+df_dict_new['status1'] = status1
+df_dict_new['status2'] = status2
+df_dict_new['status3'] = status3
+
+df_dict_new['dt1'] = [used_basetime_dt.strftime('%A %d-%m-%Y')] * len(nama_area)
+df_dict_new['dt2'] = [(used_basetime_dt + timedelta(days=1)).strftime('%A %d-%m-%Y')] * len(nama_area)
+df_dict_new['dt3'] = [(used_basetime_dt + timedelta(days=2)).strftime('%A %d-%m-%Y')] * len(nama_area)
+
+df_new = pd.DataFrame(df_dict_new)
+df_new.to_csv('static/stat.csv', index=False)
+
+
+#update weight
+predict_2d1d = predict_2d.ravel()
+predict_2d_gfs1d = predict_2d_gfs.ravel()
+gt_gsmap1d = gt_gsmap.ravel()
+
+combine_hujan_markov = np.array([gt_gsmap1d, predict_2d1d])
+sum_mat_markov = np.sum(combine_hujan_markov, axis=0)
+dif_mat_markov = gt_gsmap1d - predict_2d1d
+
+tp_mat_markov = np.zeros_like(predict_2d1d)
+tp_mat_markov[sum_mat_markov == 2] = 1
+tp_mat_markov = np.sum(tp_mat_markov)
+
+tn_mat_markov = np.zeros_like(predict_2d1d)
+tn_mat_markov[sum_mat_markov == 0] = 1
+tn_mat_markov = np.sum(tn_mat_markov)
+
+fp_mat_markov = np.zeros_like(predict_2d1d)
+fp_mat_markov[dif_mat_markov == -1] = 1
+fp_mat_markov = np.sum(fp_mat_markov)
+
+fn_mat_markov = np.zeros_like(predict_2d1d)
+fn_mat_markov[dif_mat_markov == 1] = 1
+fn_mat_markov = np.sum(fn_mat_markov)
+
+combine_hujan_gfs = np.array([gt_gsmap1d, predict_2d_gfs1d])
+sum_mat_gfs = np.sum(combine_hujan_gfs, axis=0)
+dif_mat_gfs = gt_gsmap1d - predict_2d_gfs1d
+
+tp_mat_gfs = np.zeros_like(predict_2d1d)
+tp_mat_gfs[sum_mat_gfs == 2] = 1
+tp_mat_gfs = np.sum(tp_mat_gfs)
+
+tn_mat_gfs = np.zeros_like(predict_2d1d)
+tn_mat_gfs[sum_mat_gfs == 0] = 1
+tn_mat_gfs = np.sum(tn_mat_gfs)
+
+fp_mat_gfs = np.zeros_like(predict_2d1d)
+fp_mat_gfs[dif_mat_gfs == -1] = 1
+fp_mat_gfs = np.sum(fp_mat_gfs)
+
+fn_mat_gfs = np.zeros_like(predict_2d1d)
+fn_mat_gfs[dif_mat_gfs == 1] = 1
+fn_mat_gfs = np.sum(fn_mat_gfs)
+
+acc_markov = (tp_mat_markov + tn_mat_markov) / (tp_mat_markov + tn_mat_markov + fp_mat_markov + fn_mat_markov)
+acc_gfs = (tp_mat_gfs + tn_mat_gfs) / (tp_mat_gfs + tn_mat_gfs + fp_mat_gfs + fn_mat_gfs)
+
+#weights[0] += acc_markov
+#weights[1] += acc_gfs
+
+weights = modify_weight(weights, [acc_markov, acc_gfs])
+
+#np.save('weight.npy', weights)
 
 #save image
 citra = np.zeros((len(predict_2d[0]), len(predict_2d[0,0]), 4), dtype=np.uint8)
 for iter_p in range(len_day_predict):
-    single_predict = predict_2d[iter_p]
+    #single_predict = predict_2d[iter_p]
+    #single_predict = predict_2d_gfs[iter_p]
+    #single_predict = gt_gsmap[iter_p]
+    single_predict = choosen_prediction[iter_p]
 
     foto_red = np.zeros((len(single_predict), len(single_predict[0])), dtype=np.uint8)
     foto_green = np.zeros((len(single_predict), len(single_predict[0])), dtype=np.uint8)
@@ -368,7 +546,9 @@ for iter_p in range(len_day_predict):
     foto_opacity = np.zeros((len(single_predict), len(single_predict[0])), dtype=np.uint8)
 
     foto_red[single_predict > 0] = 255
+    #foto_red = np.flipud(foto_red)
     foto_opacity[single_predict > 0] = 230
+    #foto_opacity = np.flipud(foto_opacity)
 
     #merge all rgb and opacity
     citra[:,:,0] = foto_red
@@ -377,5 +557,3 @@ for iter_p in range(len_day_predict):
     citra[:,:,3] = foto_opacity
 
     imsave(dir_overlay+'/'+'%s.png'%(iter_p), citra)
-
-#investigate in 1d

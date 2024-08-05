@@ -3,6 +3,7 @@ from datetime import datetime, timedelta, date
 import xml.etree.ElementTree as ET
 import requests
 import numpy as np
+import pandas as pd
 
 #setting
 web_cuaca = 'https://data.bmkg.go.id/DataMKG/MEWS/DigitalForecast/DigitalForecast-Indonesia.xml'
@@ -216,11 +217,61 @@ def get_rain_prediction_real(arr, dts):
     #print(area_hujans)
     return res_dicts
 
+def get_rain_prediction_real2():
+    df = pd.read_csv('static/stat.csv')
+    nama_area = list(df['nama'])
+    lat_area = np.array(df['lat'])
+    lon_area = np.array(df['lon'])
+    status1 = list(df['status1'])
+    status2 = list(df['status2'])
+    status3 = list(df['status3'])
+
+    day1_dtstr = list(df['dt1'])[0]
+    day2_dtstr = list(df['dt2'])[1]
+    day3_dtstr = list(df['dt3'])[2]
+
+    day1 = []
+    day2 = []
+    day3 = []
+    for iter_nama in range(len(nama_area)):
+        single_area = nama_area[iter_nama]
+        single_lat = lat_area[iter_nama]
+        single_lon = lon_area[iter_nama]
+
+        single_status1 = status1[iter_nama]
+        single_status2 = status2[iter_nama]
+        single_status3 = status3[iter_nama]
+
+        if single_status1 == 'hujan':
+            day1.append(single_area)
+        if single_status2 == 'hujan':
+            day2.append(single_area)
+        if single_status3 == 'hujan':
+            day3.append(single_area)
+    
+    res_dicts = []
+    single_dict = {}
+    single_dict['date'] = day1_dtstr
+    single_dict['prediction'] = ','.join(day1)
+    res_dicts.append(single_dict)
+
+    single_dict = {}
+    single_dict['date'] = day2_dtstr
+    single_dict['prediction'] = ','.join(day2)
+    res_dicts.append(single_dict)
+
+    single_dict = {}
+    single_dict['date'] = day3_dtstr
+    single_dict['prediction'] = ','.join(day3)
+    res_dicts.append(single_dict)
+    return res_dicts
+
 @app.route('/')
 def index():
     #predictions = get_rain_predictions()
-    fct_web, dt_fct = get_rain_web()
-    predictions = get_rain_prediction_real(fct_web, dt_fct)
+    #fct_web, dt_fct = get_rain_web()
+    #predictions = get_rain_prediction_real(fct_web, dt_fct)
+    predictions = get_rain_prediction_real2()
     print('cek pred', predictions)
     return render_template('index.html', predictions=predictions)
 
