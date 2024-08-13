@@ -506,6 +506,8 @@ combine_hujan_gfs = np.array([gt_gsmap1d, predict_2d_gfs1d])
 sum_mat_gfs = np.sum(combine_hujan_gfs, axis=0)
 dif_mat_gfs = gt_gsmap1d - predict_2d_gfs1d
 
+print('cek contingency markov', tp_mat_markov, tn_mat_markov, fp_mat_markov, fn_mat_markov)
+
 tp_mat_gfs = np.zeros_like(predict_2d1d)
 tp_mat_gfs[sum_mat_gfs == 2] = 1
 tp_mat_gfs = np.sum(tp_mat_gfs)
@@ -524,6 +526,8 @@ fn_mat_gfs = np.sum(fn_mat_gfs)
 
 acc_markov = (tp_mat_markov + tn_mat_markov) / (tp_mat_markov + tn_mat_markov + fp_mat_markov + fn_mat_markov)
 acc_gfs = (tp_mat_gfs + tn_mat_gfs) / (tp_mat_gfs + tn_mat_gfs + fp_mat_gfs + fn_mat_gfs)
+
+print('cek contingency gfs', tp_mat_gfs, tn_mat_gfs, fp_mat_gfs, fn_mat_gfs)
 
 #weights[0] += acc_markov
 #weights[1] += acc_gfs
